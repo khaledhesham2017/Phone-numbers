@@ -17,47 +17,34 @@ public class Main {
         int capacity;
     }
     public static void main(String[] args) {
-
-//        Character []arr = new Character[5];
-//        arr[0] = 'E' ;
-//        arr[1] = 'D';
-//        arr[2] = 'A';
-//        arr[3] = 'B';
-//        arr[4] = 'A';
-//
-//        SortHeap sortHeap = new SortHeap(arr);
-//        System.out.println("*****");
-//        for (int i =0 ;i < arr.length ; i++){
-//            System.out.println(arr[i]);
-//        }
-//
-	// write your code her
+        //IMPORTANT!!!!
+        //              the lines contain '//<<-----#' ignore them in the pseudo code
         Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); //<<-----#
         int size = scanner.nextInt();
         Service[] services = new Service[size];
         for (int i = 0; i < size; i++) {
-            services[i] = new Service();
+            services[i] = new Service();//<<-----#
             services[i].id = i;
-//            services[i].freq =  scanner.nextInt();
-            services[i].freq = random.nextInt(10);
+//            services[i].freq =  scanner.nextInt(); // use this in pseudo code
+            services[i].freq = random.nextInt(10); //<<-----#
 //            services[i].freq = i /3;
         }
         scanner.close();
-        new Heap(services) {
-            @Override
-            public boolean compare(Object first, Object second) {
-                return ((Service) first).freq > ((Service) second).freq;
-            }
+        new Heap(services) { //<<-----#
+            @Override//<<-----#
+            public boolean compare(Object first, Object second) {//<<-----#
+                return ((Service) first).freq > ((Service) second).freq;//<<-----#
+            }//<<-----#
         };
         int lastFreq = services[0].freq;
         PClass pClass = initPClass();
         int start = 0;
         for (int i = 0; i < size; i++) {
-            //TODO
-            //fix a bug up here
             if (services[i].freq != lastFreq || i == size - 1)
             {
+                //this condition annoying me
+                //if anybody got a better idea change it
                 if (i != size - 1)
                pClass = assign(services,start,i, pClass);
                 else assign(services,start,i + 1, pClass);
@@ -78,14 +65,11 @@ public class Main {
         return pClass;
     }
     private static PClass assign(Service[] services, int start, int end, PClass availableClass){
-        while (availableClass.remainingSize < end - start)
-        {
+        while (availableClass.remainingSize < end - start) {
             availableClass.id++;
             availableClass.remainingSize = (int) Math.pow(10, availableClass.id - 1);
-            availableClass.capacity = (availableClass.id ) * availableClass.remainingSize;
+            availableClass.capacity = (availableClass.id) * availableClass.remainingSize;
         }
-        //TODO
-        //or here
         for (int i = start; i < end; i++) {
             services[i].assignedNo = availableClass.capacity - availableClass.remainingSize;
             availableClass.remainingSize--;
