@@ -1,7 +1,4 @@
 package com.company;
-
-import java.nio.charset.MalformedInputException;
-import java.sql.Struct;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,7 +7,7 @@ public class Main {
     {
         int id;
 
-        public void setFreq(int freq) {
+        void setFreq(int freq) {
             if (freq <= 0) throw new RuntimeException("invalid negative no or 0");
             this.freq = freq;
         }
@@ -36,7 +33,7 @@ public class Main {
             services[i].id = i;
             try {//<<-----#
 //            services[i].freq =  scanner.nextInt(); ///<<-----*
-                services[i].setFreq(random.nextInt(9) + 1); //<<-----#
+                services[i].setFreq(random.nextInt(1000) + 1); //<<-----#
 //            services[i].freq = i /3;
             }catch (Exception e)//<<-----#
             {//<<-----#
@@ -57,7 +54,10 @@ public class Main {
         int lastFreq = services[0].freq;
         PClass pClass = initPClass();
         int start = 0;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {  // loop 1
+            // loop till find a change in freq value
+            // worst case all freq are different => n^2
+            // best case all have the same freq => n
             if (services[i].freq != lastFreq || i == size - 1)
             {
                 //this condition annoying me
@@ -82,12 +82,15 @@ public class Main {
         return pClass;
     }
     private static PClass assign(Service[] services, int start, int end, PClass availableClass){
+        // u can ignore this as it will have max loop of 9 loops in worst case  of input size 10^9
+        // one loop best case
         while (availableClass.remainingSize < end - start) {
             availableClass.id++;
             availableClass.remainingSize = (int) Math.pow(10, availableClass.id - 1);
             availableClass.capacity = (availableClass.id) * availableClass.remainingSize;
         }
-        for (int i = start; i < end; i++) {
+        //loop 2
+        for (int i = start; i < end; i++) { // loop 2
             services[i].assignedNo = availableClass.capacity - availableClass.remainingSize;
             availableClass.remainingSize--;
         }
