@@ -17,6 +17,20 @@ public class Main {
         int capacity;
     }
     public static void main(String[] args) {
+
+//        Character []arr = new Character[5];
+//        arr[0] = 'E' ;
+//        arr[1] = 'D';
+//        arr[2] = 'A';
+//        arr[3] = 'B';
+//        arr[4] = 'A';
+//
+//        SortHeap sortHeap = new SortHeap(arr);
+//        System.out.println("*****");
+//        for (int i =0 ;i < arr.length ; i++){
+//            System.out.println(arr[i]);
+//        }
+//
 	// write your code her
         Random random = new Random();
         Scanner scanner = new Scanner(System.in);
@@ -29,19 +43,26 @@ public class Main {
             services[i].freq = random.nextInt(10);
         }
         scanner.close();
-        int lastFreq = services[0].freq;
-        PClass pClass = initPClass();
-        int start = 0;
-        for (int i = 0; i < size; i++) {
-            //TODO
-            //fix a bug up here
-            if (services[i].freq != lastFreq)
-            {
-               pClass = assign(services,start,i - 1, pClass);
-               start = i ;
+        new Heap(services) {
+            @Override
+            public boolean compare(Object first, Object second) {
+                System.out.println(((Service) first).freq);
+                return ((Service) first).freq > ((Service) second).freq;
             }
-            lastFreq = services[i].freq;
-        }
+        };
+//        int lastFreq = services[0].freq;
+//        PClass pClass = initPClass();
+//        int start = 0;
+//        for (int i = 0; i < size; i++) {
+//            //TODO
+//            //fix a bug up here
+//            if (services[i].freq != lastFreq)
+//            {
+//               pClass = assign(services,start,i - 1, pClass);
+//               start = i ;
+//            }
+//            lastFreq = services[i].freq;
+//        }
         for (int i = 0; i < size; i++) {
             System.out.println("freq: " +  services[i].freq + " No: " + services[i].assignedNo);
         }
@@ -69,5 +90,8 @@ public class Main {
 
         }
         return availableClass ;
+
     }
+
+
 }
