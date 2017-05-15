@@ -1,6 +1,7 @@
 package com.company;
 
 import java.sql.Struct;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -17,17 +18,18 @@ public class Main {
     }
     public static void main(String[] args) {
 	// write your code her
+        Random random = new Random();
         Scanner scanner = new Scanner(System.in);
         int size = scanner.nextInt();
         Service[] services = new Service[size];
-        for (int i = 0; i < size; i++) {
+        for (int i = 1; i < size; i++) {
             services[i] = new Service();
             services[i].id = i;
 //            services[i].freq =  scanner.nextInt();
-            services[i].freq = i/10;
+            services[i].freq = random.nextInt(10);
         }
         scanner.close();
-        int lastFreq = -1;
+        int lastFreq = services[0].freq;
         PClass pClass = initPClass();
         int start = 0;
         for (int i = 0; i < size; i++) {
@@ -35,13 +37,13 @@ public class Main {
             //fix a bug up here
             if (services[i].freq != lastFreq)
             {
-               pClass = assign(services,start,i, pClass);
-               start = i + 1;
+               pClass = assign(services,start,i - 1, pClass);
+               start = i ;
             }
             lastFreq = services[i].freq;
         }
         for (int i = 0; i < size; i++) {
-            System.out.println(services[i].assignedNo);
+            System.out.println("freq: " +  services[i].freq + " No: " + services[i].assignedNo);
         }
     }
     private static PClass initPClass()
