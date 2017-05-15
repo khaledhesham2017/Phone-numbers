@@ -58,7 +58,7 @@ public class Main {
             //fix a bug up here
             if (services[i].freq != lastFreq || i == size - 1)
             {
-               pClass = assign(services,start,i - 1, pClass);
+               pClass = assign(services,start,i, pClass);
                start = i ;
             }
             lastFreq = services[i].freq;
@@ -80,7 +80,7 @@ public class Main {
         {
             availableClass.id++;
             availableClass.remainingSize = (int) Math.pow(10, availableClass.id - 1);
-            availableClass.capacity = availableClass.id * availableClass.remainingSize;
+            availableClass.capacity = (availableClass.id ) * availableClass.remainingSize;
         }
         //TODO
         //or here
