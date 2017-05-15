@@ -1,5 +1,6 @@
 package com.company;
 
+import java.nio.charset.MalformedInputException;
 import java.sql.Struct;
 import java.util.Random;
 import java.util.Scanner;
@@ -8,6 +9,12 @@ public class Main {
     static class Service
     {
         int id;
+
+        public void setFreq(int freq) {
+            if (freq <= 0) throw new RuntimeException("invalid negative no or 0");
+            this.freq = freq;
+        }
+
         int freq;
         int assignedNo;
     }
@@ -20,26 +27,32 @@ public class Main {
         //IMPORTANT!!!!
         //              the lines contain '//<<-----#' ignore them in the pseudo code
         //              the lines contain '//<<-----*' should be implemented in pseudo code regardless if its commented in code
-        Random random = new Random();
+        Random random = new Random();//<<-----#
         Scanner scanner = new Scanner(System.in); //<<-----#
         int size = scanner.nextInt();
         Service[] services = new Service[size];
         for (int i = 0; i < size; i++) {
             services[i] = new Service();//<<-----#
             services[i].id = i;
+            try {//<<-----#
 //            services[i].freq =  scanner.nextInt(); ///<<-----*
-            services[i].freq = random.nextInt(10); //<<-----#
+                services[i].setFreq(random.nextInt(10)); //<<-----#
 //            services[i].freq = i /3;
+            }catch (Exception e)//<<-----#
+            {//<<-----#
+                System.out.println("invalid No");//<<-----#
+                i--;//<<-----#
+            }//<<-----#
         }
         scanner.close();
         new Heap(services) { //<<-----#
             @Override//<<-----#
             public boolean compare(Object first, Object second) {//<<-----#
-                return ((Service) first).freq > ((Service) second).freq;//<<-----#
+                return ((Service) first).freq < ((Service) second).freq;//<<-----#
             }//<<-----#
         };
 
-        // heapSort(services) //<<-----*
+        // heapSort(services); //<<-----*
 
         int lastFreq = services[0].freq;
         PClass pClass = initPClass();
