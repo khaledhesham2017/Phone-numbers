@@ -19,6 +19,7 @@ public class Main {
     public static void main(String[] args) {
         //IMPORTANT!!!!
         //              the lines contain '//<<-----#' ignore them in the pseudo code
+        //              the lines contain '//<<-----*' should be implemented in pseudo code regardless if its commented in code
         Random random = new Random();
         Scanner scanner = new Scanner(System.in); //<<-----#
         int size = scanner.nextInt();
@@ -26,7 +27,7 @@ public class Main {
         for (int i = 0; i < size; i++) {
             services[i] = new Service();//<<-----#
             services[i].id = i;
-//            services[i].freq =  scanner.nextInt(); // use this in pseudo code
+//            services[i].freq =  scanner.nextInt(); ///<<-----*
             services[i].freq = random.nextInt(10); //<<-----#
 //            services[i].freq = i /3;
         }
@@ -37,6 +38,9 @@ public class Main {
                 return ((Service) first).freq > ((Service) second).freq;//<<-----#
             }//<<-----#
         };
+
+        // heapSort(services) //<<-----*
+
         int lastFreq = services[0].freq;
         PClass pClass = initPClass();
         int start = 0;
