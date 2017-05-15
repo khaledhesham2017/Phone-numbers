@@ -36,33 +36,33 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int size = scanner.nextInt();
         Service[] services = new Service[size];
-        for (int i = 1; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             services[i] = new Service();
             services[i].id = i;
 //            services[i].freq =  scanner.nextInt();
             services[i].freq = random.nextInt(10);
+//            services[i].freq = i /15;
         }
         scanner.close();
         new Heap(services) {
             @Override
             public boolean compare(Object first, Object second) {
-                System.out.println(((Service) first).freq);
                 return ((Service) first).freq > ((Service) second).freq;
             }
         };
-//        int lastFreq = services[0].freq;
-//        PClass pClass = initPClass();
-//        int start = 0;
-//        for (int i = 0; i < size; i++) {
-//            //TODO
-//            //fix a bug up here
-//            if (services[i].freq != lastFreq)
-//            {
-//               pClass = assign(services,start,i - 1, pClass);
-//               start = i ;
-//            }
-//            lastFreq = services[i].freq;
-//        }
+        int lastFreq = services[0].freq;
+        PClass pClass = initPClass();
+        int start = 0;
+        for (int i = 0; i < size; i++) {
+            //TODO
+            //fix a bug up here
+            if (services[i].freq != lastFreq)
+            {
+               pClass = assign(services,start,i - 1, pClass);
+               start = i ;
+            }
+            lastFreq = services[i].freq;
+        }
         for (int i = 0; i < size; i++) {
             System.out.println("freq: " +  services[i].freq + " No: " + services[i].assignedNo);
         }
@@ -76,7 +76,7 @@ public class Main {
         return pClass;
     }
     private static PClass assign(Service[] services, int start, int end, PClass availableClass){
-        if (availableClass.remainingSize < end - start)
+        while (availableClass.remainingSize < end - start)
         {
             availableClass.id++;
             availableClass.remainingSize = (int) Math.pow(10, availableClass.id - 1);
