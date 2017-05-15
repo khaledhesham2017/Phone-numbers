@@ -56,7 +56,7 @@ public class Main {
         for (int i = 0; i < size; i++) {
             //TODO
             //fix a bug up here
-            if (services[i].freq != lastFreq)
+            if (services[i].freq != lastFreq || i == size - 1)
             {
                pClass = assign(services,start,i - 1, pClass);
                start = i ;
