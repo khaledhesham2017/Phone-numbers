@@ -3,14 +3,18 @@ package com.company;
 /**
  * Created by billy on 5/15/17.
  */
-public class Heap {
+public abstract class Heap {
     private int heapSize;
-    public int[] array;
+    private Object[] array;
 
-    public Heap(int size){
+    public  Object[] getArray() {
+        return array;
+    }
 
+    public Heap(Object array[]){
         heapSize = 0;
-        array = new int[size];
+        this.array =array;
+        this.Heapsort();
 
     }
 
@@ -25,7 +29,6 @@ public class Heap {
     }
 
     private void buildMaxHeap(){
-
         heapSize = array.length-1;
         for(int i = (heapSize)/2; i >=0; i-- ){
             maxHeapify(i);
@@ -34,12 +37,11 @@ public class Heap {
     }
 
     private void maxHeapify(int i){
-
         int l = left(i);
         int r = right(i);
         int largest = i;
 
-        if(l <= heapSize && array[l] > array[largest]){
+        if(l <= heapSize &&  compare(array[l] , array[largest])){
 
             largest = l;
 
@@ -49,7 +51,7 @@ public class Heap {
 
         }
 
-        if(r <= heapSize && array[r] > array[largest]){
+        if(r <= heapSize && compare(array[r] , array[largest])){
 
             largest = r;
 
@@ -57,7 +59,7 @@ public class Heap {
 
         if(largest != i){
             //swap
-            int temp = array[i];
+            Object temp = array[i];
             array[i] = array[largest];
             array[largest] = temp;
 
@@ -66,14 +68,14 @@ public class Heap {
         }
     }
 
-    public void Heapsort(){
+     private void Heapsort(){
 
         buildMaxHeap();
 
         for(int i = heapSize; i > 0; i--){
 
             //swap
-            int temp = array[0];
+            Object temp = array[0];
             array[0] = array[i];
             array[i] = temp;
 
@@ -83,4 +85,6 @@ public class Heap {
 
         }
     }
+    public abstract  boolean compare(Object frist ,Object second );
+
 }
