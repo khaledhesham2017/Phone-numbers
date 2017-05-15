@@ -36,7 +36,7 @@ public class Main {
             services[i].id = i;
             try {//<<-----#
 //            services[i].freq =  scanner.nextInt(); ///<<-----*
-                services[i].setFreq(random.nextInt(10)); //<<-----#
+                services[i].setFreq(random.nextInt(9) + 1); //<<-----#
 //            services[i].freq = i /3;
             }catch (Exception e)//<<-----#
             {//<<-----#
