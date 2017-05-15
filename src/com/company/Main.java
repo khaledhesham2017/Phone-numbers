@@ -41,7 +41,7 @@ public class Main {
             services[i].id = i;
 //            services[i].freq =  scanner.nextInt();
             services[i].freq = random.nextInt(10);
-//            services[i].freq = i /15;
+//            services[i].freq = i /3;
         }
         scanner.close();
         new Heap(services) {
@@ -58,7 +58,9 @@ public class Main {
             //fix a bug up here
             if (services[i].freq != lastFreq || i == size - 1)
             {
+                if (i != size - 1)
                pClass = assign(services,start,i, pClass);
+                else assign(services,start,i + 1, pClass);
                start = i ;
             }
             lastFreq = services[i].freq;
@@ -84,10 +86,9 @@ public class Main {
         }
         //TODO
         //or here
-        for (int i = start; i <= end; i++) {
+        for (int i = start; i < end; i++) {
             services[i].assignedNo = availableClass.capacity - availableClass.remainingSize;
             availableClass.remainingSize--;
-
         }
         return availableClass ;
 
