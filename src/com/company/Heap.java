@@ -85,6 +85,6 @@ public abstract class Heap {
 
         }
     }
-    public abstract  boolean compare(Object frist ,Object second );
+    public abstract  boolean compare(Object first, Object second );
 
 }

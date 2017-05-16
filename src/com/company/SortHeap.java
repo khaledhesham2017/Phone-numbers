@@ -9,8 +9,8 @@ public class SortHeap extends  Heap {
     }
  //make  here  compare  object
     @Override
-    public boolean compare(Object frist, Object second) {
-        if ((Character)frist > (Character) second ){
+    public boolean compare(Object first, Object second) {
+        if ((Character) first > (Character) second ){
             return  true;
         }
         return false;
