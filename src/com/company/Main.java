@@ -62,23 +62,26 @@ public class Main {
             // loop till find a change in freq value
             // worst case all freq are different => n^2
             // best case all have the same freq => n
-
-           if (services[i].freq != lastFreq || i == size - 1)
+            Boolean checkFreq = (services[i].freq != lastFreq);
+            Boolean checkSize = (i == size - 1) ;
+            if (checkFreq || checkSize)
             {
                 //this condition annoying me
                 //if anybody got a better idea change it
-                if (i != size - 1)
-               pClass = assign(services,start,i, pClass);
-                else{
-                if(services[i].freq != lastFreq){
+                if(checkFreq && checkSize){
                     pClass = assign(services,start,i, pClass);
                     pClass = assign(services,i,i+1, pClass);
                 }
                 else {
-                    assign(services, start, i+1, pClass);
-                }
-            }
-               start = i ;
+                    if(checkSize){
+                        assign(services, start, i+1, pClass);
+                    }
+                    else {
+                        assign(services, start, i, pClass);
+                    }}
+
+
+                start = i ;
             }
             lastFreq = services[i].freq;
         }
