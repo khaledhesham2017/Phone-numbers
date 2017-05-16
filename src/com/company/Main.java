@@ -7,11 +7,6 @@ public class Main {
     {
         int id;
 
-        void setFreq(int freq) {
-            if (freq <= 0) throw new RuntimeException("invalid negative no or 0");
-            this.freq = freq;
-        }
-
         int freq;
         int assignedNo;
     }
@@ -24,22 +19,31 @@ public class Main {
         //IMPORTANT!!!!
         //              the lines contain '//<<-----#' ignore them in the pseudo code
         //              the lines contain '//<<-----*' should be implemented in pseudo code regardless if its commented in code
-        Random random = new Random();//<<-----#
         Scanner scanner = new Scanner(System.in); //<<-----#
-        int size = scanner.nextInt();
+        Random random = new Random();
+        System.out.print("Please enter the number of services: "); // <<----#
+        String serviceNum = scanner.next();
+        while (!isValid(serviceNum)){
+            System.out.println("Invalid Number!");
+            System.out.print("Please enter the number of services again: ");
+            serviceNum = scanner.next();
+        }
+        int size = Integer.parseInt(serviceNum);
         Service[] services = new Service[size];
         for (int i = 0; i < size; i++) {
             services[i] = new Service();//<<-----#
+            System.out.print("Enter the service frequency "+ (i+1) + ": " );
             services[i].id = i;
-            try {//<<-----#
-//            services[i].freq =  scanner.nextInt(); ///<<-----*
-                services[i].setFreq(random.nextInt(1000) + 1); //<<-----#
-//            services[i].freq = i /3;
-            }catch (Exception e)//<<-----#
-            {//<<-----#
-                System.out.println("invalid No");//<<-----#
-                i--;//<<-----#
-            }//<<-----#
+            services[i].freq = random.nextInt(100) + 1;
+//            String freq =  scanner.next(); ///<<-----*
+//
+//            if(isValid(freq))
+//                services[i].freq = (Integer.parseInt(freq)); //<<-----#
+//            else {
+//                System.out.println("Invalid Number!");//<<-----#
+//
+//                i--;//<<-----#
+//            }
         }
         scanner.close();
         new Heap(services) { //<<-----#
@@ -58,19 +62,30 @@ public class Main {
             // loop till find a change in freq value
             // worst case all freq are different => n^2
             // best case all have the same freq => n
-            if (services[i].freq != lastFreq || i == size - 1)
+
+           if (services[i].freq != lastFreq || i == size - 1)
             {
                 //this condition annoying me
                 //if anybody got a better idea change it
                 if (i != size - 1)
                pClass = assign(services,start,i, pClass);
-                else assign(services,start,i + 1, pClass);
+                else{
+                if(services[i].freq != lastFreq){
+                    pClass = assign(services,start,i, pClass);
+                    pClass = assign(services,i,i+1, pClass);
+                }
+                else {
+                    assign(services, start, i+1, pClass);
+                }
+            }
                start = i ;
             }
             lastFreq = services[i].freq;
         }
+        System.out.println("\n");
         for (int i = 0; i < size; i++) {
-            System.out.println("freq: " +  services[i].freq + " No: " + services[i].assignedNo);
+//            System.out.println("SN: " +  (services[i].id+1) + "\tFreq: " +  (services[i].freq) + "\tAN: " + services[i].assignedNo);
+            System.out.println("Freq: " +  (services[i].freq) + "\tAN: " + services[i].assignedNo);
         }
     }
     private static PClass initPClass()
@@ -96,6 +111,17 @@ public class Main {
         }
         return availableClass ;
 
+    }
+    private static Boolean isValid(String text){
+        try {
+            int num = Integer.parseInt(text);
+            if(num <= 0)
+                return false;
+
+        }catch (NumberFormatException e){
+            return false;
+        }
+        return true;
     }
 
 
